@@ -4,7 +4,7 @@
 namespace Src\Models;
 use Src\Db\Connection;
 
-class Transactions_Model extends Connection
+class TransactionsModel extends Connection
 {
     private $id;
     private $idAccountFk;

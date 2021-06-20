@@ -4,12 +4,12 @@ use Src\Libraries\Template;
 use Src\Models\PessoasModel;
 
 class HomeController extends Controller {
-    private $pessoaModel = null;
+    private $TransactionsModel = null;
 
     public function __construct()
     {
         parent::__construct();
-        $this->pessoaModel =  new PessoasModel();
+        $this->TransactionsModel =  new PessoasModel();
     }
 
     public function index(){
@@ -18,7 +18,7 @@ class HomeController extends Controller {
          */
         $tpl = array();
 
-        $last_transactions = $this->pessoaModel->getLastTransactions();
+        $last_transactions = $this->TransactionsModel->getLastTransactions();
 
         if(isset($last_transactions) && count($last_transactions)){
             $tpl['last_transactions'] = $last_transactions;

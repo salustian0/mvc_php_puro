@@ -3,7 +3,7 @@ namespace Src\Controllers;
 
 use Src\Models\Accounts_Model;
 use Src\Models\PessoasModel;
-use Src\Models\Transactions_Model;
+use Src\Models\TransactionsModel;
 
 /**
  * Class AccountsController
@@ -13,16 +13,16 @@ use Src\Models\Transactions_Model;
  */
 class TransactionsController extends Controller {
     private $Accounts_Model = null;
-    private $Pessoas_Model = null;
-    private $Transactions_Model = null;
+    private $PessoasModel = null;
+    private $TransactionsModel = null;
     private $module;
     private $limit_pagination = 5;
     function __construct()
     {
         parent::__construct();
         $this->Accounts_Model = new Accounts_Model();
-        $this->Pessoas_Model = new PessoasModel();
-        $this->Transactions_Model = new Transactions_Model();
+        $this->PessoasModel = new PessoasModel();
+        $this->TransactionsModel = new TransactionsModel();
 
         $this->module = "transactions";
 
@@ -40,11 +40,11 @@ class TransactionsController extends Controller {
         /**
          * Listagem de dados
          */
-        $listing = $this->Transactions_Model->listing(array(),$limit);
+        $listing = $this->TransactionsModel->listing(array(),$limit);
 
 
         //Paginação!
-        $total_results = $this->Transactions_Model->countPaginate();
+        $total_results = $this->TransactionsModel->countPaginate();
         $tpl['total_results'] = isset($total_results) ? $total_results : 0;
         $tpl['pagination'] =  makePaginationView($total_results,$this->limit_pagination,$page);
 
@@ -73,7 +73,7 @@ class TransactionsController extends Controller {
         /**
          * Buscando registro de pessoas para montar a select na view
          */
-        $pessoas = $this->Pessoas_Model->getPessoas();
+        $pessoas = $this->PessoasModel->getPessoas();
         if(isset($pessoas) && count($pessoas)){
             $tpl['pessoas']  = $pessoas;
         }
@@ -141,9 +141,9 @@ class TransactionsController extends Controller {
         /**
          * setando valores
          */
-        $this->Transactions_Model->setIdAccount($_POST['idAccountFk']);
-        $this->Transactions_Model->setOperation($_POST['operation']);
-        $this->Transactions_Model->setValue($_POST['value']);
+        $this->TransactionsModel->setIdAccount($_POST['idAccountFk']);
+        $this->TransactionsModel->setOperation($_POST['operation']);
+        $this->TransactionsModel->setValue($_POST['value']);
 
         /**
          * Registrando
@@ -159,7 +159,7 @@ class TransactionsController extends Controller {
         }
 
         if($this->Accounts_Model->change(array("value" => $newAccountValue),"accounts.id = {$account['id']}")){
-            if($this->Transactions_Model->record()){
+            if($this->TransactionsModel->record()){
                 set_message("success","Movimentação  registrada com sucesso!");
                 return redirect($this->module."/index");
             }else

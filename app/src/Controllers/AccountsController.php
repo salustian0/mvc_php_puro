@@ -11,15 +11,15 @@ use Src\Models\PessoasModel;
  * Controller -> accounts (Responsável por ações da conta)
  */
 class AccountsController extends Controller {
-    private $Accounts_Model = null;
-    private $Pessoas_Model = null;
+    private $AccountsModel = null;
+    private $PessoasModel = null;
     private $module;
     private $limit_pagination = 5;
     function __construct()
     {
         parent::__construct();
-        $this->Accounts_Model = new Accounts_Model();
-        $this->Pessoas_Model = new PessoasModel();
+        $this->AccountsModel = new Accounts_Model();
+        $this->PessoasModel = new PessoasModel();
         $this->module = "accounts";
 
     }
@@ -36,10 +36,10 @@ class AccountsController extends Controller {
         /**
          * Listagem de dados
          */
-        $listing = $this->Accounts_Model->listing(array(),$limit);
+        $listing = $this->AccountsModel->listing(array(),$limit);
 
         //Paginação!
-        $total_results = $this->Accounts_Model->countPaginate();
+        $total_results = $this->AccountsModel->countPaginate();
         $tpl['total_results'] = isset($total_results) ? $total_results : 0;
         $tpl['pagination'] =  makePaginationView($total_results,$this->limit_pagination,$page);
 
@@ -77,7 +77,7 @@ class AccountsController extends Controller {
         /**
          * Buscando registro de pessoas para montar a select na view
          */
-        $pessoas = $this->Pessoas_Model->getPessoas();
+        $pessoas = $this->PessoasModel->getPessoas();
         if(isset($pessoas) && count($pessoas)){
             $tpl['pessoas']  = $pessoas;
         }
@@ -86,7 +86,7 @@ class AccountsController extends Controller {
          * Caso seja edição busca os dados do registro solicitado
          */
         if(!empty($id) && empty($this->last_request_data)){
-            $pessoa = $this->Accounts_Model->get("accounts.id = '{$id}' ");
+            $pessoa = $this->AccountsModel->get("accounts.id = '{$id}' ");
             if(isset($pessoa) && count($pessoa)){
                 $tpl['_data'] = $pessoa[0];
             }
@@ -112,6 +112,12 @@ class AccountsController extends Controller {
             return redirect($this->module."/form");
         }
 
+        if(strlen($_POST['account_number']) > 9){
+            record_request_data($_POST);
+            set_message("danger","A conta deve conter no máximo 9 caracteres!");
+            return redirect($this->module."/form");
+        }
+
         /**
          * Validando número da conta -> permitido somente números
          */
@@ -124,7 +130,7 @@ class AccountsController extends Controller {
         /**
          * Validando número da conta para não permitir números repetidos
          */
-        $exists = $this->Accounts_Model->exists("accounts.account_number = '{$_POST['account_number']}' ");
+        $exists = $this->AccountsModel->exists("accounts.account_number = '{$_POST['account_number']}' AND accounts.id != '{$id}' ");
         if($exists){
             record_request_data($_POST);
             set_message("danger","Já existe uma conta cadastrada com esse número!");
@@ -136,7 +142,7 @@ class AccountsController extends Controller {
                 $columns['account_number'] = isset($_POST['account_number']) ? $_POST['account_number'] : null;
                 $columns['idPessoaFk'] = isset($_POST['idPessoaFk']) ? $_POST['idPessoaFk'] : null;
 
-                if($this->Accounts_Model->change(array_filter($columns),"accounts.id = '{$id}' ")){
+                if($this->AccountsModel->change(array_filter($columns),"accounts.id = '{$id}' ")){
                     set_message("success","Registro atualizado com sucesso");
                     return redirect($this->module."/index");
                 }else
@@ -148,9 +154,9 @@ class AccountsController extends Controller {
         }
         else //Registro
         {
-                $this->Accounts_Model->setAccountNumber($_POST['account_number']);
-                $this->Accounts_Model->setIdPessoa($_POST['idPessoaFk']);
-                if($this->Accounts_Model->record()){
+                $this->AccountsModel->setAccountNumber($_POST['account_number']);
+                $this->AccountsModel->setIdPessoa($_POST['idPessoaFk']);
+                if($this->AccountsModel->record()){
                     set_message("success","Nova conta criada com sucesso!");
                     return redirect($this->module."/index");
                 }else
@@ -172,7 +178,7 @@ class AccountsController extends Controller {
         $count_deleted = 0;
         if(isset($ids) && count($ids)){
             foreach ($ids as  $k => $v) {
-                if($this->Accounts_Model->change(array("active" => "N"), "accounts.id = '{$v}' ")){
+                if($this->AccountsModel->change(array("active" => "N"), "accounts.id = '{$v}' ")){
                     $count_deleted++;
                 }
             }

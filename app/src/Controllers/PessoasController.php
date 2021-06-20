@@ -10,13 +10,13 @@ use Src\Models\PessoasModel;
  * Controller -> pessoas (Responsável por ações de pessoa)
  */
 class PessoasController extends Controller {
-    private $Pessoas_Model = null;
+    private $PessoasModel = null;
     private $module;
     private $limit_pagination = 5;
     function __construct()
     {
         parent::__construct();
-        $this->Pessoas_Model = new PessoasModel();
+        $this->PessoasModel = new PessoasModel();
         $this->module = "pessoas";
 
     }
@@ -33,11 +33,11 @@ class PessoasController extends Controller {
         /**
          * Listagem de dados
          */
-        $listing = $this->Pessoas_Model->listing($limit);
+        $listing = $this->PessoasModel->listing($limit);
 
 
         //Paginação!
-        $total_results = $this->Pessoas_Model->countPaginate();
+        $total_results = $this->PessoasModel->countPaginate();
         $tpl['total_results'] = isset($total_results) ? $total_results : 0;
         $tpl['pagination'] =  makePaginationView($total_results,$this->limit_pagination,$page);
 
@@ -76,7 +76,7 @@ class PessoasController extends Controller {
          * Caso seja edição busca os dados do registro solicitado
          */
         if(!empty($id) && empty($this->last_request_data)){
-            $pessoa = $this->Pessoas_Model->get("pessoas.id = '{$id}' ");
+            $pessoa = $this->PessoasModel->get("pessoas.id = '{$id}' ");
             if(isset($pessoa) && count($pessoa)){
                 $tpl['_data'] = $pessoa[0];
             }
@@ -110,6 +110,21 @@ class PessoasController extends Controller {
             return redirect($this->module."/form");
         }
 
+        if(strlen($_POST['nome']) > 200){
+            record_request_data($_POST);
+            set_message("danger","O nome deve conter no máximo 200 caracteres!");
+            return redirect($this->module."/form");
+        }
+
+        if(strlen(str_replace([".","-"],"",$_POST['cpf'])) > 11){
+            record_request_data($_POST);
+            set_message("danger","O cpf deve conter no máximo 11 caracteres!");
+            return redirect($this->module."/form");
+        }
+
+
+
+
         if(isset($id) && !empty($id)){ //Edição
                 $columns = array();
                 $columns['nome'] = isset($_POST['nome']) ? ucfirst($_POST['nome']) : null;
@@ -117,7 +132,7 @@ class PessoasController extends Controller {
                 $columns['endereco'] = isset($_POST['endereco']) ? $_POST['endereco'] : null;
 
 
-            if($this->Pessoas_Model->change(array_filter($columns),"pessoas.id = '{$id}' ")){
+            if($this->PessoasModel->change(array_filter($columns),"pessoas.id = '{$id}' ")){
                     set_message("success","Registro atualizado com sucesso");
                     return redirect($this->module."/index");
                 }else
@@ -130,11 +145,11 @@ class PessoasController extends Controller {
         else //Registro
         {
 
-                $this->Pessoas_Model->setName(ucfirst($_POST['nome']));
-                $this->Pessoas_Model->setAddress($_POST['endereco']);
-                $this->Pessoas_Model->setDocNumber(str_replace(['.','-'],"",$_POST['cpf']));
+                $this->PessoasModel->setName(ucfirst($_POST['nome']));
+                $this->PessoasModel->setAddress($_POST['endereco']);
+                $this->PessoasModel->setDocNumber(str_replace(['.','-'],"",$_POST['cpf']));
 
-            if($this->Pessoas_Model->record()){
+            if($this->PessoasModel->record()){
                     set_message("success","Pessoa registrada com sucesso!");
                     return redirect($this->module."/index");
                 }else
@@ -156,7 +171,7 @@ class PessoasController extends Controller {
         $count_deleted = 0;
         if(isset($ids) && count($ids)){
             foreach ($ids as  $k => $v) {
-                if($this->Pessoas_Model->change(array("active" => "N"), "pessoas.id = '{$v}' ")){
+                if($this->PessoasModel->change(array("active" => "N"), "pessoas.id = '{$v}' ")){
                     $count_deleted++;
                 }
             }
