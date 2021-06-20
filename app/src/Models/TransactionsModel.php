@@ -46,7 +46,7 @@ class TransactionsModel extends Connection
         return self::select(null,array(
             "fields" => "{$this->table}.operation, 
             {$this->table}.value,
-            DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \ás %H:%i:%s') as dtRegister,
+            DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister,
             pessoas.nome,accounts.account_number",
             "joins" => array(
                 "INNER JOIN accounts ON {$this->table}.idAccountFk = accounts.id",
@@ -76,4 +76,5 @@ class TransactionsModel extends Connection
             "unique" => true
         ]);
     }
+
 }

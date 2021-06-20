@@ -43,7 +43,7 @@ class Accounts_Model extends Connection
     public function listing($where = null, $limit = array()){
         return self::select("accounts.active = 'Y'",array(
             "fields" => "accounts.id,{$this->table}.account_number, 
-            DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \ás %H:%i:%s') as dtRegister,
+            DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister,
             accounts.value,
             accounts.idPessoaFk,
             pessoas.nome,pessoas.cpf",

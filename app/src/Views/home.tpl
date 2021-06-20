@@ -20,7 +20,6 @@
                 <tr>
                     <th class="align-middle text-center">Nome</th>
                     <th class="align-middle text-center">Documento</th>
-                    <th class="align-middle text-center">Endereço</th>
                     <th class="align-middle text-center">Conta</th>
                     <th class="align-middle text-center">Última movimentação</th>
                     <th class="align-middle text-center">Data</th>
@@ -32,10 +31,15 @@
                 <tr>
                     <td class="align-middle text-center">{{$lt.nome}}</td>
                     <td class="align-middle text-center">{{$lt.cpf}}</td>
-                    <td class="align-middle text-center">{{$lt.endereco}}</td>
                     <td class="align-middle text-center">{{$lt.account_number}}</td>
-                    <td class="align-middle text-center">{{$lt.value}}</td>
-                    <td class="align-middle text-center">{{$lt.dtRegister}}</td>
+                    <td class="align-middle text-center">
+                        {{if $lt.operation === "deposito"}}
+                             <span class="text-success">{{$lt.value}}</span>
+                            {{else}}
+                             <span class="text-danger">-{{$lt.value}}</span>
+                        {{/if}}
+                    </td>
+                     <td class="align-middle text-center">{{$lt.dtRegister}}</td>
                 </tr>
                 {{/foreach}}
                 {{else}}

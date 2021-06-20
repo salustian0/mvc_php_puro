@@ -1,7 +1,7 @@
 <?php
 namespace Src\Controllers;
 use Src\Libraries\Template;
-use Src\Models\PessoasModel;
+use Src\Models\TransactionsModel;
 
 class HomeController extends Controller {
     private $TransactionsModel = null;
@@ -9,7 +9,7 @@ class HomeController extends Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->TransactionsModel =  new PessoasModel();
+        $this->TransactionsModel =  new TransactionsModel();
     }
 
     public function index(){
@@ -18,7 +18,7 @@ class HomeController extends Controller {
          */
         $tpl = array();
 
-        $last_transactions = $this->TransactionsModel->getLastTransactions();
+        $last_transactions = $this->TransactionsModel->listing(null,array('start' => 0 , 'limit' => 5));
 
         if(isset($last_transactions) && count($last_transactions)){
             $tpl['last_transactions'] = $last_transactions;

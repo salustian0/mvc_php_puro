@@ -39,7 +39,7 @@ class PessoasModel extends Connection {
 
     function listing($limit){
          return self::select("{$this->table}.active = 'Y' ",[
-             "fields" => "{$this->table}.*",
+             "fields" => "{$this->table}.*,DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister",
              "limit" => "{$limit['start']},{$limit['limit']}",
              "order" => "{$this->table}.dtRegister DESC"
          ]);
@@ -53,18 +53,6 @@ class PessoasModel extends Connection {
         return self::countRegisters("{$this->table}.active = 'Y' ");
     }
 
-    public function getLastTransactions(){
-         return self::select(null,[
-            "fields" => 'pessoas.nome,pessoas.cpf,accounts.account_number,bank_transactions.dtRegister,bank_transactions.value,
-             DATE_FORMAT(bank_transactions.dtRegister, "%d/%m/%Y \ás %H:%i:%s") as dtRegister',
-             "joins" =>[
-                'inner  join accounts on accounts.idPessoaFk = pessoas.id',
-                'inner  join bank_transactions on bank_transactions.idAccountFk = accounts.id'
-             ],
-             "limit" => 10,
-             "order" => 'bank_transactions.dtRegister DESC'
-         ]);
-    }
     public function get($where = null){
         return self::select($where,[
             "fields" => "{$this->table}.*",
