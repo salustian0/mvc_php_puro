@@ -120,7 +120,14 @@ class TransactionsController extends Controller {
         }
 
         if((int)$_POST['value'] < 0 || !is_numeric($_POST['value'])){
+            record_request_data($_POST);
             set_message("danger","Esse valor é inválido!");
+            return redirect($this->module."/form");
+        }
+
+        if((float)$_POST['value'] > 5000){
+            record_request_data($_POST);
+            set_message("danger","O limite permitido para operações é de 5000!");
             return redirect($this->module."/form");
         }
 
