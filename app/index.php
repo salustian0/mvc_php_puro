@@ -1,5 +1,24 @@
 <?php
+/**
+ * Micro framework MVC desenvolvido por Renan Salustiano
+ * data: 19/06/2021 - 20/06/2021
+ */
 
+/**
+ * Iniciando sessão para todo o projeto
+ */
+session_start();
+/* 
+    Instanciando autoload de classes
+*/
+require __DIR__."/vendor/autoload.php";
+
+/*
+ * Instanciando classe Route -> Responsável pelo roteamento das requisições
+ * */
+$route = new \Src\Core\Route();
+
+/*
 $dbuser = $_ENV['MYSQL_USER'];
 $dbpass = $_ENV['MYSQL_PASS'];
 
@@ -21,4 +40,4 @@ try {
 } catch(PDOException $e) {
     echo $e->getMessage();
 }
-
+*/
