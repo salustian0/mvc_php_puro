@@ -112,9 +112,22 @@ class AccountsController extends Controller {
             return redirect($this->module."/form");
         }
 
+        /**
+         * Validando número da conta -> permitido somente números
+         */
         if(!is_numeric($_POST['account_number'])){
             record_request_data($_POST);
             set_message("danger","O número da conta precisa ser totalmente númerico!");
+            return redirect($this->module."/form");
+        }
+
+        /**
+         * Validando número da conta para não permitir números repetidos
+         */
+        $exists = $this->Accounts_Model->exists("accounts.account_number = '{$_POST['account_number']}' ");
+        if($exists){
+            record_request_data($_POST);
+            set_message("danger","Já existe uma conta cadastrada com esse número!");
             return redirect($this->module."/form");
         }
 

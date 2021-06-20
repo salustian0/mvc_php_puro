@@ -77,4 +77,10 @@ class Accounts_Model extends Connection
             {$this->table}.account_number"
         ));
     }
+    public function exists($where = null){
+        return self::select($where,[
+            "fields" => "{$this->table}.id",
+            "unique" => true
+        ]);
+    }
 }
