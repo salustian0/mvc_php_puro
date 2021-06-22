@@ -76,5 +76,14 @@ class TransactionsModel extends Connection
             "unique" => true
         ]);
     }
+    public function exists($where = null){
+        return self::select($where,[
+            "fields" => "{$this->table}.id,accounts.account_number",
+            "joins" => array(
+                "INNER JOIN accounts ON accounts.id = {$this->table}.idAccountFk"
+            ),
+            "unique" => true
+        ]);
+    }
 
 }

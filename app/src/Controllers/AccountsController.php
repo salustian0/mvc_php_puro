@@ -3,6 +3,7 @@ namespace Src\Controllers;
 
 use Src\Models\Accounts_Model;
 use Src\Models\PessoasModel;
+use Src\Models\TransactionsModel;
 
 /**
  * Class AccountsController
@@ -13,6 +14,7 @@ use Src\Models\PessoasModel;
 class AccountsController extends Controller {
     private $AccountsModel = null;
     private $PessoasModel = null;
+    private $TransactionsModel = null;
     private $module;
     private $limit_pagination = 5;
     function __construct()
@@ -20,6 +22,8 @@ class AccountsController extends Controller {
         parent::__construct();
         $this->AccountsModel = new Accounts_Model();
         $this->PessoasModel = new PessoasModel();
+        $this->TransactionsModel = new TransactionsModel();
+
         $this->module = "accounts";
 
     }
@@ -178,6 +182,18 @@ class AccountsController extends Controller {
         $count_deleted = 0;
         if(isset($ids) && count($ids)){
             foreach ($ids as  $k => $v) {
+                $exists_transactions = $this->TransactionsModel->exists(" bank_transactions.idAccountFk = '{$v}' ");
+
+                /**
+                 * Validando se a conta já possui movimentações, se sim não realiza a exclusão!
+                 */
+                if(isset($exists_transactions) && count($exists_transactions)){
+                    $exists_transactions = $exists_transactions[0];
+                    record_request_data($_POST);
+                    set_message("danger","A conta '{$exists_transactions['account_number']}' já possui movimentações, portanto você não pode exclui-la");
+                    continue;
+                }
+
                 if($this->AccountsModel->change(array("active" => "N"), "accounts.id = '{$v}' ")){
                     $count_deleted++;
                 }
