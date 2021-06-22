@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2021-06-20 21:18:44
+/* Smarty version 3.1.36, created on 2021-06-22 09:55:13
   from '/var/www/html/Src/Views/transactions/form.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_60cfb0b4879497_03799185',
+  'unifunc' => 'content_60d1b381a3cd14_75311530',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '29d273911375e1a1ff7621e802558c9df6174432' => 
     array (
       0 => '/var/www/html/Src/Views/transactions/form.tpl',
-      1 => 1624223923,
+      1 => 1624355712,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:elements/footer.tpl' => 1,
   ),
 ),false)) {
-function content_60cfb0b4879497_03799185 (Smarty_Internal_Template $_smarty_tpl) {
+function content_60d1b381a3cd14_75311530 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:elements/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 
@@ -63,8 +63,11 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <div class="form-group">
             <label>Operação:</label>
             <select name="operation" class="form-control">
-                <option value="deposito">Depósito</option>
-                <option value="retirada">Retirada</option>
+                <!-- Retornando a operação que foi enviada caso haja erros na requisição
+                    -> Resolvido após a entrega
+                -->
+                <option <?php if ($_smarty_tpl->tpl_vars['_data']->value['operation'] === "deposito") {?> selected <?php }?> value="deposito">Depósito</option>
+                <option <?php if ($_smarty_tpl->tpl_vars['_data']->value['operation'] === "retirada") {?> selected <?php }?> value="retirada">Retirada</option>
             </select>
         </div>
 

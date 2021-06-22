@@ -24,8 +24,11 @@
         <div class="form-group">
             <label>Operação:</label>
             <select name="operation" class="form-control">
-                <option value="deposito">Depósito</option>
-                <option value="retirada">Retirada</option>
+                <!-- Retornando a operação que foi enviada caso haja erros na requisição
+                    -> Resolvido após a entrega
+                -->
+                <option {{if $_data.operation === "deposito"}} selected {{/if}} value="deposito">Depósito</option>
+                <option {{if $_data.operation === "retirada" }} selected {{/if}} value="retirada">Retirada</option>
             </select>
         </div>
 

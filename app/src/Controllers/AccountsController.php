@@ -186,6 +186,7 @@ class AccountsController extends Controller {
 
                 /**
                  * Validando se a conta já possui movimentações, se sim não realiza a exclusão!
+                 * -> Resolvido após a entrega
                  */
                 if(isset($exists_transactions) && count($exists_transactions)){
                     $exists_transactions = $exists_transactions[0];

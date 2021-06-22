@@ -64,8 +64,23 @@ class TransactionsController extends Controller {
      */
     public function form(){
         $tpl = array();
+
+        /**
+         * Retornando dados corretamente para a view caso haja erros
+         * -> Resolvido após a entrega
+         */
+
         $selected_account = isset($_GET['account']) ? $_GET['account'] : 0;
         $selected_pessoa = isset($_GET['pessoa']) ? $_GET['pessoa'] : 0;
+
+        if(isset($this->last_request_data['idPessoaFk'])){
+            $selected_pessoa = $this->last_request_data['idPessoaFk'];
+        }
+        if(isset($this->last_request_data['idAccountFk'])){
+            $selected_account = $this->last_request_data['idAccountFk'];
+        }
+        
+        
 
         $tpl['selected_pessoa'] = $selected_pessoa;
 
@@ -136,11 +151,21 @@ class TransactionsController extends Controller {
         if(isset($account) && count($account)){
             $account = $account[0];
             if($_POST['operation'] === "retirada" && (float)$_POST['value'] > (float)$account['value']){
+                /**
+                 * Setando dados da requisição anterior
+                 *  -> Resolvido após a entrega
+                 */
+                record_request_data($_POST);
                 set_message("danger","Essa conta não possui fundos suficientes, você pode realizar um deposíto antes de retirar!");
                 return redirect($this->module."/form");
             }
         }else
         {
+            /**
+             * Setando dados da requisição anterior
+             *  -> Resolvido após a entrega
+             */
+            record_request_data($_POST);
             set_message("Conta inválida!");
             redirect($this->module."/form");
         }
