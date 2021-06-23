@@ -43,7 +43,7 @@ class TransactionsModel extends Connection
     }
 
     public function listing($where = null, $limit = array()){
-        return self::select(null,array(
+        return self::select(" accounts.active = 'Y' and pessoas.active = 'Y' ",array(
             "fields" => "{$this->table}.operation, 
             {$this->table}.value,
             DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister,
@@ -58,9 +58,15 @@ class TransactionsModel extends Connection
     }
 
     public function countPaginate($where = null){
-        return self::countRegisters(null,array(
-            "INNER JOIN accounts ON {$this->table}.idAccountFk = accounts.id",
-            "INNER JOIN pessoas ON pessoas.id = accounts.idPessoaFk",
+        /**
+         * Filtros adicionados adequadamente
+         * -> Realizado após a entrega
+         */
+        return self::countRegisters("accounts.active = 'Y' and pessoas.active = 'Y' ",array(
+            "joins" => array(
+                "INNER JOIN accounts ON {$this->table}.idAccountFk = accounts.id",
+                "INNER JOIN pessoas ON pessoas.id = accounts.idPessoaFk",
+            )
         ));
     }
 

@@ -41,7 +41,7 @@ class Accounts_Model extends Connection
     }
 
     public function listing($where = null, $limit = array()){
-        return self::select("accounts.active = 'Y'",array(
+        return self::select("accounts.active = 'Y' and  pessoas.active = 'Y' ",array(
             "fields" => "accounts.id,{$this->table}.account_number, 
             DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister,
             accounts.value,
@@ -78,7 +78,11 @@ class Accounts_Model extends Connection
         ));
     }
     public function exists($where = null){
-        return self::select($where,[
+        /**
+         * Aplicação de filtro impedindo retornar verdadeiro em contas inativas
+         * -> Resolvido após entrega
+         */
+        return self::select("{$where} and accounts.active = 'Y' ",[
             "fields" => "{$this->table}.id",
             "unique" => true
         ]);

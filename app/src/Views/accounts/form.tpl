@@ -8,7 +8,7 @@
             <label>Pessoa:</label>
             <select class="form-control required" name="idPessoaFk">
                 {{foreach item=$p from=$pessoas}}
-                    <option {{if $_data && count($_data) && $_data.idPessoaFk === $p.id}}selected{{/if}}  value="{{$p.id}}">{{$p.nome}} - {{$p.cpf}}</option>
+                    <option {{if $_data && count($_data) && $_data.idPessoaFk === $p.id || $selected_pessoa === $p.id}}selected{{/if}}  value="{{$p.id}}">{{$p.nome}} - {{$p.cpf}}</option>
                 {{/foreach}}
             </select>
         </div>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2021-06-20 20:50:14
+/* Smarty version 3.1.36, created on 2021-06-23 13:53:22
   from '/var/www/html/Src/Views/elements/footer.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_60cfaa06af8623_39474732',
+  'unifunc' => 'content_60d33cd241b121_34507712',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'edb43567f98b8ec44694eebf7ea6224686022be5' => 
     array (
       0 => '/var/www/html/Src/Views/elements/footer.tpl',
-      1 => 1624222212,
+      1 => 1624456342,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_60cfaa06af8623_39474732 (Smarty_Internal_Template $_smarty_tpl) {
+function content_60d33cd241b121_34507712 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -49,6 +49,9 @@ function content_60cfaa06af8623_39474732 (Smarty_Internal_Template $_smarty_tpl)
 >
 const MODULE_URL = '<?php echo url($_smarty_tpl->tpl_vars['module']->value);?>
 ';
+const BASE_URL = '<?php echo url();?>
+';
+
 
     <?php if ($_smarty_tpl->tpl_vars['js_const']->value && count($_smarty_tpl->tpl_vars['js_const']->value)) {?>
         <?php

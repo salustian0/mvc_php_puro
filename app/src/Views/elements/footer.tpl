@@ -12,6 +12,8 @@
 <script type="text/javascript" src="{{url("src/public/js/masked_input.js")}}"></script>
 <script>
 const MODULE_URL = '{{url($module)}}';
+const BASE_URL = '{{url()}}';
+
 
     {{if $js_const && count($js_const)}}
         {{foreach item=$value key=$key from=$js_const}}

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2021-06-20 17:22:55
+/* Smarty version 3.1.36, created on 2021-06-23 13:57:02
   from '/var/www/html/Src/Views/accounts/form.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_60cf796f63b329_12916462',
+  'unifunc' => 'content_60d33daeef7396_87672641',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '2f4b208dfea9daa2f78fca7f10c236e47a6fa1ba' => 
     array (
       0 => '/var/www/html/Src/Views/accounts/form.tpl',
-      1 => 1624208897,
+      1 => 1624456516,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:elements/footer.tpl' => 1,
   ),
 ),false)) {
-function content_60cf796f63b329_12916462 (Smarty_Internal_Template $_smarty_tpl) {
+function content_60d33daeef7396_87672641 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:elements/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 
@@ -41,7 +41,7 @@ $_smarty_tpl->tpl_vars['p']->do_else = true;
 if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['p']->value) {
 $_smarty_tpl->tpl_vars['p']->do_else = false;
 ?>
-                    <option <?php if ($_smarty_tpl->tpl_vars['_data']->value && count($_smarty_tpl->tpl_vars['_data']->value) && $_smarty_tpl->tpl_vars['_data']->value['idPessoaFk'] === $_smarty_tpl->tpl_vars['p']->value['id']) {?>selected<?php }?>  value="<?php echo $_smarty_tpl->tpl_vars['p']->value['id'];?>
+                    <option <?php if ($_smarty_tpl->tpl_vars['_data']->value && count($_smarty_tpl->tpl_vars['_data']->value) && $_smarty_tpl->tpl_vars['_data']->value['idPessoaFk'] === $_smarty_tpl->tpl_vars['p']->value['id'] || $_smarty_tpl->tpl_vars['selected_pessoa']->value === $_smarty_tpl->tpl_vars['p']->value['id']) {?>selected<?php }?>  value="<?php echo $_smarty_tpl->tpl_vars['p']->value['id'];?>
 "><?php echo $_smarty_tpl->tpl_vars['p']->value['nome'];?>
  - <?php echo $_smarty_tpl->tpl_vars['p']->value['cpf'];?>
 </option>

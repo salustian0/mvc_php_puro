@@ -1,16 +1,42 @@
 <?php
+/**
+ * @author Renan Salustiano
+ */
 
+
+/**
+ * @param null $url
+ * @return string
+ * Método responsável por retornar a url, aceitando paramêtro de url ex url(users/logim)
+ */
 function url($url = null){
     return "http://localhost/{$url}";
 }
+
+/**
+ * @param $arg
+ * Método responsável por debugar variaveis, objetos etc
+ */
 function _pre($arg){
     echo "<pre>";
     print_r($arg);
     echo "</pre>";
 }
+
+/**
+ * @param null $url
+ * Redirecionamento com a url padrão no inicio
+ */
 function redirect($url = null){
     return header('Location: '.url($url));
 }
+
+/**
+ * @param array $indexes
+ * @param array $data
+ * @return bool
+ * Método responsável por validar campos obrigatórios
+ */
 function validate($indexes = array(),$data = array()){
     foreach ($indexes as $k => $v){
         if(!isset($data[$v]) || empty($data[$v])){
@@ -19,6 +45,11 @@ function validate($indexes = array(),$data = array()){
     }
     return true;
 }
+
+/**
+ * @param array $data
+ * Método responsável por registrar dados da requisição em uma sessão para retornar para a View
+ */
 function record_request_data($data = array()){
     $_SESSION['last_request_data'] = $data;
 }

@@ -87,8 +87,9 @@ class TransactionsController extends Controller {
         $tpl['js_const']['selected_account'] = $selected_account;
         /**
          * Buscando registro de pessoas para montar a select na view
+         * -> Alteração getPessoas -> listing (atualização realizada após entrega)
          */
-        $pessoas = $this->PessoasModel->getPessoas();
+        $pessoas = $this->PessoasModel->listing(array('start' => 0,'limit' => 1000));
         if(isset($pessoas) && count($pessoas)){
             $tpl['pessoas']  = $pessoas;
         }
@@ -112,7 +113,7 @@ class TransactionsController extends Controller {
                 die();
             }
         }
-        echo json_encode(array());
+        echo json_encode(false);
     }
 
     /**

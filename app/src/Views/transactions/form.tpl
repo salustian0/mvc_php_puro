@@ -13,17 +13,24 @@
             </select>
         </div>
         <div class="form-group">
+            <div id="account-content" style="display: none">
             <label>Contas:</label>
             <select class="form-control required" name="idAccountFk" id="slc_account"></select>
+            </div>
+            <div id="no-account" class="p-2 text-center" style="display: none">
+                <p class="text-warning">Essa pessoa ainda não possui uma conta registrada<br>
+                <a href="#">Você pode cadastrar uma conta clicando aqui!</a>
+                </p>
+            </div>
         </div>
 
         <div class="form-group">
             <label>Valor:</label>
-            <input name="value" class="form-control required"  type="text" name="account_number" value="{{$_data.value}}">
+            <input id="value" name="value" class="form-control required"  type="text" name="account_number" value="{{$_data.value}}">
         </div>
         <div class="form-group">
             <label>Operação:</label>
-            <select name="operation" class="form-control">
+            <select id="operation" name="operation" class="form-control">
                 <!-- Retornando a operação que foi enviada caso haja erros na requisição
                     -> Resolvido após a entrega
                 -->
@@ -33,7 +40,7 @@
         </div>
 
         <div class="d-flex justify-content-center align-items-center p-5">
-            <button  type="submit" class="btn btn-success" name="action" value="save">
+            <button id="action" type="submit" class="btn btn-success" name="action" value="save">
                 Salvar
             </button>
         </div>

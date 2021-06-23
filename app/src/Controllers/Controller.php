@@ -3,6 +3,12 @@
 namespace Src\Controllers;
 use Src\Libraries\Template;
 
+/**
+ * Class Controller
+ * @package Src\Controllers
+ * @author Renan Salustiano
+ * Controller base que contém configurações que  serão necessárias a toda classe do tipo Controller
+ */
 class Controller{
 
     protected $child = array();

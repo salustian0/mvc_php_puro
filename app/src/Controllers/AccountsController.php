@@ -64,6 +64,15 @@ class AccountsController extends Controller {
     public function form(){
         $tpl = array();
         $id = null;
+
+        /**
+         * Selecionando pessoa automaticamente via get vindo da página 'transactions'
+         * -> Realizado após a entrega
+         */
+        $selected_pessoa = isset($_GET['pessoa']) && !empty($_GET['pessoa']) ? $_GET['pessoa'] : 0;
+        $tpl['selected_pessoa'] = $selected_pessoa;
+
+
         /**
          * Recuperando id caso seja edição de dados
          */

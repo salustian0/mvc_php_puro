@@ -38,6 +38,9 @@ class PessoasModel extends Connection {
 
 
     function listing($limit){
+        /**
+         * Listando pessoas ativas
+         */
          return self::select("{$this->table}.active = 'Y' ",[
              "fields" => "{$this->table}.*,DATE_FORMAT({$this->table}.dtRegister, '%d/%m/%Y \á\s %H:%i:%s') as dtRegister",
              "limit" => "{$limit['start']},{$limit['limit']}",
@@ -59,8 +62,13 @@ class PessoasModel extends Connection {
             "unique" => true
             ]);
     }
+
+    /**
+     * @return array
+     * Função desnecessária! -> Alteração realizada após entrega
+     */
     public function getPessoas(){
-        return self::select(null,[
+        return self::select("pessoas.active = 'Y' ",[
             "fields" => 'pessoas.id,pessoas.nome,pessoas.cpf'
         ]);
     }
