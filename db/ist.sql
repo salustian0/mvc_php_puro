@@ -13,6 +13,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Copiando estrutura para tabela ist.accounts
+DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `account_number` varchar(9) DEFAULT NULL,
@@ -24,18 +25,15 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`id`),
   KEY `idPessoaFk` (`idPessoaFk`),
   CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`idPessoaFk`) REFERENCES `pessoas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela ist.accounts: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela ist.accounts: ~22 rows (aproximadamente)
 DELETE FROM `accounts`;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`id`, `account_number`, `dtRegister`, `dtLastUpdate`, `active`, `idPessoaFk`, `value`) VALUES
-	(1, '10102020', '2021-06-20 21:34:40', NULL, 'Y', 1, 135.00),
-	(2, '556699', '2021-06-20 21:35:28', NULL, 'Y', 2, 0.00),
-	(3, '559988', '2021-06-20 21:35:42', NULL, 'Y', 1, 0.00);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela ist.bank_transactions
+DROP TABLE IF EXISTS `bank_transactions`;
 CREATE TABLE IF NOT EXISTS `bank_transactions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idAccountFk` int(10) unsigned DEFAULT NULL,
@@ -45,17 +43,15 @@ CREATE TABLE IF NOT EXISTS `bank_transactions` (
   PRIMARY KEY (`id`),
   KEY `idAccountFk` (`idAccountFk`),
   CONSTRAINT `bank_transactions_ibfk_1` FOREIGN KEY (`idAccountFk`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela ist.bank_transactions: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela ist.bank_transactions: ~35 rows (aproximadamente)
 DELETE FROM `bank_transactions`;
 /*!40000 ALTER TABLE `bank_transactions` DISABLE KEYS */;
-INSERT INTO `bank_transactions` (`id`, `idAccountFk`, `dtRegister`, `value`, `operation`) VALUES
-	(1, 1, '2021-06-20 21:34:47', 150.00, 'deposito'),
-	(2, 1, '2021-06-20 21:34:54', 15.00, 'retirada');
 /*!40000 ALTER TABLE `bank_transactions` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela ist.pessoas
+DROP TABLE IF EXISTS `pessoas`;
 CREATE TABLE IF NOT EXISTS `pessoas` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL DEFAULT '',
@@ -64,15 +60,15 @@ CREATE TABLE IF NOT EXISTS `pessoas` (
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `dtRegister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela ist.pessoas: ~19 rows (aproximadamente)
+-- Copiando dados para a tabela ist.pessoas: ~12 rows (aproximadamente)
 DELETE FROM `pessoas`;
 /*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
 INSERT INTO `pessoas` (`id`, `nome`, `cpf`, `endereco`, `active`, `dtRegister`) VALUES
-	(1, 'Marcelo Ramoss', '48349778032', 'Rua Luiz Demo, n 120, Bairro Passagem, TubarÃ£o/SC', 'Y', '2021-06-20 19:48:13'),
-	(2, 'Renato Silva', '76537136024', 'Rua Alexandre de SÃ¡, n 98, Bairro Dehon, TubarÃ£o/SC', 'Y', '2021-06-20 19:48:13'),
-	(3, 'Maria Cordeiro', '01054804010', 'Rua JÃºlio Pozza, n 450, Bairro SÃ£o JoÃ£o, TubarÃ£o/SC', 'Y', '2021-06-20 19:48:13');
+	(1, 'Marcelo Ramosk', '48349778032', 'Rua Luiz Demo, n 120, Bairro Passagem, TubarÃ£o/SC2', 'Y', '2021-06-20 19:48:13'),
+	(2, 'Renato Silva', '76537136024', 'Rua Alexandre de SÃ¡, n 98, Bairro Dehon, TubarÃ£o/SC', 'N', '2021-06-20 19:48:13'),
+	(3, 'Maria Cordeiro', '01054804010', 'Rua JÃºlio Pozza, n 450, Bairro SÃ£o JoÃ£o, TubarÃ£o/SC', 'N', '2021-06-20 19:48:13');
 /*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
